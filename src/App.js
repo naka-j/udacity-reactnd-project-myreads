@@ -21,19 +21,30 @@ class BooksApp extends React.Component {
     this.state = {
       books: []
     }
+
+    this.moveShelf = this.changeShelf.bind(this)
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({books: books})
+      console.log(books)
     })
+
+  }
+
+  changeShelf = (event) => {
+    console.log(' to ' + event.currentTarget.value )
+    this.setState((state) => (
+      {books: this.state.books}
+    ))
   }
 
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <ListBooks books={this.state.books} />
+          <ListBooks books={this.state.books} onChangeShelf={() => this.changeShelf} />
         )}
         />
         <Route path='/search' render={() => (
