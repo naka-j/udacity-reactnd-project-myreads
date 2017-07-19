@@ -22,7 +22,7 @@ class BooksApp extends React.Component {
       books: []
     }
 
-    this.moveShelf = this.changeShelf.bind(this)
+    this.moveShelf = this.moveShelf.bind(this)
   }
 
   componentDidMount() {
@@ -33,10 +33,15 @@ class BooksApp extends React.Component {
 
   }
 
-  changeShelf = (event) => {
-    console.log(' to ' + event.currentTarget.value )
+  moveShelf = (targetBook, event) => {
+    var newBooks = Object.assign([], this.state.books)
+    newBooks.map((book) => {
+      if (book.id === targetBook.id) {
+        book.shelf = event.currentTarget.value
+      }
+    })
     this.setState((state) => (
-      {books: this.state.books}
+      {books: newBooks}
     ))
   }
 
@@ -44,7 +49,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <ListBooks books={this.state.books} onChangeShelf={() => this.changeShelf} />
+          <ListBooks books={this.state.books} onMoveShelf={this.moveShelf} />
         )}
         />
         <Route path='/search' render={() => (
