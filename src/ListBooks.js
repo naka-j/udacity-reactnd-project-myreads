@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import BookShelf from './BookShelf'
-
-const SHELF_CURRENT = 'currentlyReading'
-const SHELF_WANT_TO = 'wantToRead'
-const SHELF_READ = 'read'
-const SHELF_NONE = 'none'
+import * as ConstantValues from './Constants'
 
 class ListBooks extends Component {
     render () {
@@ -18,9 +14,9 @@ class ListBooks extends Component {
                 </div>
                 <div className="list-books-content">
                 <div>
-                    <BookShelf shelfTitle='Currently Reading' books={books.filter((b) => b.shelf === SHELF_CURRENT)} onMoveShelf={moveShelf} />
-                    <BookShelf shelfTitle='Want to Read' books={books.filter((b) => b.shelf === SHELF_WANT_TO)} onMoveShelf={moveShelf} />
-                    <BookShelf shelfTitle='Read' books={books.filter((b) => b.shelf === SHELF_READ)} onMoveShelf={moveShelf} />
+                    <BookShelf shelfTitle='Currently Reading' books={books.filter((b) => b.shelf === ConstantValues.ShelfId.CURRENT)} onMoveShelf={moveShelf} />
+                    <BookShelf shelfTitle='Want to Read' books={books.filter((b) => b.shelf === ConstantValues.ShelfId.WANT_TO_READ)} onMoveShelf={moveShelf} />
+                    <BookShelf shelfTitle='Read' books={books.filter((b) => b.shelf === ConstantValues.ShelfId.READ)} onMoveShelf={moveShelf} />
                 </div>
                 </div>
                 <div className="open-search">
