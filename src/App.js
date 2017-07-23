@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
+import sortBy from 'sort-by'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -52,7 +53,6 @@ class BooksApp extends React.Component {
   addBookToShelf(books, targetBook, targetShelf) {
     var newBook = targetBook
     newBook.shelf = targetShelf
-    
     books.push(newBook)
     this.setState((state) => (
       {books: books}
@@ -60,11 +60,14 @@ class BooksApp extends React.Component {
   }
 
   search(query) {
-    if (query === "") {
-      this.setState({searchBooksResult: []})
-      return
+    if (!query) {
+      return this.setState({searchBooksResult: []})
     }
-    BooksAPI.search(query, 100).then((books) => {
+    BooksAPI.search(query, 20).then((books) => {
+      if (books.error !== undefined) {
+        return this.setState({searchBooksResult: []})
+      }
+      books.sort(sortBy('title'))
       this.setState({searchBooksResult: books})
       console.log(books)
     })
