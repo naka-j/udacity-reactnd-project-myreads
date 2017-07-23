@@ -19,10 +19,12 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      books: []
+      books: [],
+      searchBooksResult: []
     }
 
     this.moveShelf = this.moveShelf.bind(this)
+    this.search = this.search.bind(this)
   }
 
   componentDidMount() {
@@ -30,22 +32,41 @@ class BooksApp extends React.Component {
       this.setState({books: books})
       console.log(books)
     })
-
   }
 
   moveShelf = (targetBook, event) => {
     var targetShelf = event.currentTarget.value
     BooksAPI.update(targetBook, targetShelf).then((data) => {
-      // Update success -> state update
-      var newBooks = Object.assign([], this.state.books)
-      newBooks.map((book) => {
-        if (book.id === targetBook.id) {
-          book.shelf = targetShelf
-        }
-      })
-      this.setState((state) => (
-        {books: newBooks}
-      ))
+      // Update success -> books state Delete Insert
+      var books = this.removeBookFromShelf(this.state.books, targetBook)
+      this.addBookToShelf(books, targetBook, targetShelf)
+    })
+  }
+
+  // remove book from books state, return new books array
+  removeBookFromShelf(books, targetBook) {
+    return books.filter((book) => book.id !== targetBook.id)
+  }
+
+  // add new book (set new books state)
+  addBookToShelf(books, targetBook, targetShelf) {
+    var newBook = targetBook
+    newBook.shelf = targetShelf
+    
+    books.push(newBook)
+    this.setState((state) => (
+      {books: books}
+    ))
+  }
+
+  search(query) {
+    if (query === "") {
+      this.setState({searchBooksResult: []})
+      return
+    }
+    BooksAPI.search(query, 100).then((books) => {
+      this.setState({searchBooksResult: books})
+      console.log(books)
     })
   }
 
@@ -57,7 +78,7 @@ class BooksApp extends React.Component {
         )}
         />
         <Route path='/search' render={() => (
-          <SearchBooks onMoveShelf={this.moveShelf} />
+          <SearchBooks onMoveShelf={this.moveShelf} search={this.search} books={this.state.searchBooksResult} />
         )}
         />
       </div>

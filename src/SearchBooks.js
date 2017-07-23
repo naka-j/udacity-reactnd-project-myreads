@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
 import BooksGrid from './BooksGrid'
 import * as ConstantValues from './Constants'
 
@@ -8,29 +7,19 @@ class SearchBooks extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            query: "",
-            searchBooksResult: []
+            query: ""
         }
 
-        this.search = this.search.bind(this)
+        this.search = this.props.search
     }
-    search() {
-        if (this.state.query === "") {
-            this.setState({searchBooksResult: []})
-            return
-        }
-        BooksAPI.search(this.state.query, 100).then((books) => {
-            this.setState({searchBooksResult: books})
-            console.log(books)
-        })
-    }
+    
     updateQuery(query) {
-        this.setState({query: query.trim()}, this.search)
+        this.setState({query: query.trim()}, this.search(query))
     }
         
     render () {
         const query = this.state.query
-        const books = this.state.searchBooksResult
+        const books = this.props.books
         return (
             <div className="search-books">
                 <div className="search-books-bar">
