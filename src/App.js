@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
+import BookDetail from './BookDetail'
 import sortBy from 'sort-by'
 import './App.css'
 
@@ -63,6 +64,7 @@ class BooksApp extends React.Component {
     if (!query) {
       return this.setState({searchBooksResult: []})
     }
+    
     BooksAPI.search(query, 20).then((books) => {
       if (books.error !== undefined) {
         return this.setState({searchBooksResult: []})
@@ -82,6 +84,10 @@ class BooksApp extends React.Component {
         />
         <Route path='/search' render={() => (
           <SearchBooks onMoveShelf={this.moveShelf} search={this.search} books={this.state.searchBooksResult} />
+        )}
+        />
+        <Route path='/detail/:id' render={({match}) => (
+          <BookDetail onMoveShelf={this.moveShelf} match={match} />
         )}
         />
       </div>

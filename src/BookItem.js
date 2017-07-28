@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 class BookItem extends Component {
     
@@ -16,9 +17,11 @@ class BookItem extends Component {
             <li>
                 <div className="book">
                 <div className="book-top">
-                    <div className="book-cover">
-                        <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
-                    </div>
+                    <Link to={'/detail/' + book.id}>
+                        <div className="book-cover">
+                            <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
+                        </div>
+                    </Link>
                     <div className="book-shelf-changer">
                     <select value={book.shelf} onChange={(event) => moveShelf(book, event)}>
                         <option value="none" disabled>Move to...</option>

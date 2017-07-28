@@ -172,3 +172,84 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* book detail */
+.book-detail {
+  background-color: #fff;
+  width: 100%;
+  padding: 0 10px 20px;
+}
+
+@media (min-width: 600px) {
+  .book-detail {
+    padding: 0 20px 40px;
+  }
+}
+
+.detail-main{
+  display: flex;
+}
+
+.book-thumbnail {
+  width: 30%;
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.book-description {
+  width: 70%;
+}
+
+.detail-title {
+  border-bottom: 1px solid #dedede;
+}
+
+.detail-title h1 {
+  margin: 0;
+}
+
+.book-subtitle {
+  font-size: 16px;
+  font-weight: 200;
+  padding: 0 20px;
+}
+
+.explanation {
+  border-bottom: 1px solid #dedede;
+  padding: 10px;
+}
+
+.book-info {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.row {
+  line-height: 40px;
+  border-top: 1px solid #dedede;
+}
+.row:last-child {
+  border-bottom: 1px solid #dedede;
+}
+
+.row .col {
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.col-title {
+  background-color: #F5F5F5;
+}
+
+.col.col-1 {width: 8.33%;}
+.col.col-2 {width: 16.66%;}
+.col.col-3 {width: 25%;}
+.col.col-4 {width: 33.33%;}
+.col.col-5 {width: 41.66%;}
+.col.col-6 {width: 50%;}
+.col.col-7 {width: 58.33%;}
+.col.col-8 {width: 66.66%;}
+.col.col-9 {width: 75%;}
+.col.col-10 {width: 83.33%;}
+.col.col-11 {width: 91.66%;}
+.col.col-12 {width: 100%;}

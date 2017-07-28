@@ -24,9 +24,9 @@ class SearchBooks extends Component {
             <div className="search-books">
                 <div className="search-books-bar">
                     <Link className="close-search" to='/'>Close</Link>
-                <div className="search-books-input-wrapper">
-                    <input type="text" value={query} onChange={(event) => this.updateQuery(event.currentTarget.value)} placeholder="Search by title or author"/>
-                </div>
+                    <div className="search-books-input-wrapper">
+                        <input type="text" value={query} onChange={(event) => this.updateQuery(event.currentTarget.value, history)} placeholder="Search by title or author"/>
+                    </div>
                 </div>
                 <div className="search-books-results">
                     <BooksGrid books={books.filter((book) => book.shelf === ConstantValues.ShelfId.NONE)} onMoveShelf={this.props.onMoveShelf} />
