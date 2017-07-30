@@ -6,7 +6,7 @@ function BookShelf(props) {
         <div className="bookshelf">
             <h2 className="bookshelf-title">{props.shelfTitle}</h2>
             <div className="bookshelf-books">
-                <BooksGrid books={props.books} onMoveShelf={props.onMoveShelf} />
+                <BooksGrid history={props.history} onClickBookItem={props.onClickBookItem} books={props.books} onMoveShelf={props.onMoveShelf} />
             </div>
         </div>
     )

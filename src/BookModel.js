@@ -1,4 +1,4 @@
-export var Book = {
+export const Book = {
     allowAnonLogging: null,
     authors: null,
     averageRating: null,

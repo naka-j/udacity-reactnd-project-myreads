@@ -27,7 +27,7 @@ class BookDetail extends Component {
         const book = this.state.book
         return (
             <div>
-                <Link className="close-search" to='/'>Close</Link>
+                <Link className="close-search" to={this.props.backUrl ? this.props.backUrl : '/'}>Close</Link>
                 <div className='book-detail'>
                     {this.state.showDetail && (
                         <div className='detail-main'>
@@ -58,6 +58,28 @@ class BookDetail extends Component {
                             </div>
                         </div>
                     )}
+                    <div className='other-books'>
+                        <ul className='other-books-list'>
+                            {this.props.books.filter((b) => b.id !== book.id).map((b) => {
+                                const bookImageURL =  (b.imageLinks === undefined ? "" : b.imageLinks.thumbnail)
+                                return (
+                                    <li key={b.id} className='candidate'>
+                                        <div className="book">
+                                            <div className="book-top">
+                                                <div onClick={() => this.props.onClickBookItem(this.props.history, book.id)}>
+                                                    <div className="book-cover">
+                                                        <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="book-title">{b.title}</div>
+                                            <div className="book-authors">{book.authors}</div>
+                                        </div>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </div>
                 </div>
             </div>
         )

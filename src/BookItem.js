@@ -11,19 +11,18 @@ class BookItem extends Component {
     
     render () {
         const book = this.props.book
-        const moveShelf = this.props.onMoveShelf
         const bookImageURL = (book.imageLinks === undefined ? "" : book.imageLinks.thumbnail)
         return (
             <li>
                 <div className="book">
                 <div className="book-top">
-                    <Link to={'/detail/' + book.id}>
+                    <div onClick={() => this.props.onClickBookItem(this.props.history, book.id)}>
                         <div className="book-cover">
                             <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
                         </div>
-                    </Link>
+                    </div>
                     <div className="book-shelf-changer">
-                    <select value={book.shelf} onChange={(event) => moveShelf(book, event)}>
+                    <select value={book.shelf} onChange={(event) => this.props.onMoveShelf(book, event)}>
                         <option value="none" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>

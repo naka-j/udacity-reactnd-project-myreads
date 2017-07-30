@@ -29,7 +29,7 @@ class SearchBooks extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <BooksGrid books={books.filter((book) => book.shelf === ConstantValues.ShelfId.NONE)} onMoveShelf={this.props.onMoveShelf} />
+                    <BooksGrid history={this.props.history} onClickBookItem={this.props.onClickBookItem} books={books.filter((book) => book.shelf === ConstantValues.ShelfId.NONE)} onMoveShelf={this.props.onMoveShelf} />
                 </div>
             </div>
         )

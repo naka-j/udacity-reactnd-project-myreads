@@ -22,11 +22,13 @@ class BooksApp extends React.Component {
     super(props)
     this.state = {
       books: [],
-      searchBooksResult: []
+      searchBooksResult: [],
+      backUrl: '/'
     }
 
     this.moveShelf = this.moveShelf.bind(this)
     this.search = this.search.bind(this)
+    this.showDetail = this.showDetail.bind(this)
   }
 
   componentDidMount() {
@@ -37,10 +39,10 @@ class BooksApp extends React.Component {
   }
 
   moveShelf = (targetBook, event) => {
-    var targetShelf = event.currentTarget.value
+    const targetShelf = event.currentTarget.value
     BooksAPI.update(targetBook, targetShelf).then((data) => {
       // Update success -> books state Delete Insert
-      var books = this.removeBookFromShelf(this.state.books, targetBook)
+      const books = this.removeBookFromShelf(this.state.books, targetBook)
       this.addBookToShelf(books, targetBook, targetShelf)
     })
   }
@@ -52,7 +54,7 @@ class BooksApp extends React.Component {
 
   // add new book (set new books state)
   addBookToShelf(books, targetBook, targetShelf) {
-    var newBook = targetBook
+    const newBook = targetBook
     newBook.shelf = targetShelf
     books.push(newBook)
     this.setState((state) => (
@@ -75,19 +77,39 @@ class BooksApp extends React.Component {
     })
   }
 
+  showDetail(history, id) {
+    // keep back url before replacing url
+    this.setState({backUrl: history.location.pathname})
+    history.push('/detail/'+id)
+  }
+
   render() {
     return (
       <div className="app">
-        <Route exact path='/' render={() => (
-          <ListBooks books={this.state.books} onMoveShelf={this.moveShelf} />
+        <Route exact path='/' render={({history}) => (
+          <ListBooks history={history} 
+                    onClickBookItem={this.showDetail} 
+                    books={this.state.books} 
+                    onMoveShelf={this.moveShelf} 
+                    />
         )}
         />
-        <Route path='/search' render={() => (
-          <SearchBooks onMoveShelf={this.moveShelf} search={this.search} books={this.state.searchBooksResult} />
+        <Route path='/search' render={({history}) => (  
+          <SearchBooks history={history} 
+                      onClickBookItem={this.showDetail} 
+                      onMoveShelf={this.moveShelf} 
+                      search={this.search} 
+                      books={this.state.searchBooksResult} 
+                      />
         )}
         />
         <Route path='/detail/:id' render={({match}) => (
-          <BookDetail onMoveShelf={this.moveShelf} match={match} />
+          <BookDetail onClickBookItem={this.showDetail} 
+                     onMoveShelf={this.moveShelf}
+                     match={match} 
+                     backUrl={this.state.backUrl} 
+                     books={this.state.backUrl === '/search' ? this.state.searchBooksResult : this.state.books}  
+                     />
         )}
         />
       </div>

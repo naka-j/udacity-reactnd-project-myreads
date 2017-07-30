@@ -12,11 +12,13 @@ function ListBooks(props){
             <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-            <div>
-                <BookShelf shelfTitle='Currently Reading' books={books.filter((b) => b.shelf === ConstantValues.ShelfId.CURRENT)} onMoveShelf={moveShelf} />
-                <BookShelf shelfTitle='Want to Read' books={books.filter((b) => b.shelf === ConstantValues.ShelfId.WANT_TO_READ)} onMoveShelf={moveShelf} />
-                <BookShelf shelfTitle='Read' books={books.filter((b) => b.shelf === ConstantValues.ShelfId.READ)} onMoveShelf={moveShelf} />
-            </div>
+                <div>
+                    {ConstantValues.DisplayShelf.map((ShelfId) => {
+                        return (
+                            <BookShelf key={ShelfId} history={props.history} onClickBookItem={props.onClickBookItem} shelfTitle={ConstantValues.ShelfName[ShelfId]} books={books.filter((b) => b.shelf === ShelfId)} onMoveShelf={moveShelf} />
+                        )
+                    })}
+                </div>
             </div>
             <div className="open-search">
             <Link to='/search'>Add a book</Link>
