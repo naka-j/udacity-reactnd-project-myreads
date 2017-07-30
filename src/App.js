@@ -4,6 +4,7 @@ import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
 import BookDetail from './BookDetail'
+import {Book} from './BookModel'
 import sortBy from 'sort-by'
 import './App.css'
 
@@ -23,7 +24,9 @@ class BooksApp extends React.Component {
     this.state = {
       books: [],
       searchBooksResult: [],
-      backUrl: '/'
+      backUrl: '/',
+      showingBook: Book,
+      showDetail: false
     }
 
     this.moveShelf = this.moveShelf.bind(this)
@@ -79,8 +82,13 @@ class BooksApp extends React.Component {
 
   showDetail(history, id) {
     // keep back url before replacing url
-    this.setState({backUrl: history.location.pathname})
-    history.push('/detail/'+id)
+    BooksAPI.get(id).then(book => {
+      this.setState({showingBook: book, showDetail: true})
+      if (history.location.pathname === '/' || history.location.pathname === '/search') {
+        this.setState({backUrl: history.location.pathname})
+      }
+      history.push('/detail/'+id)
+    })
   }
 
   render() {
@@ -103,12 +111,15 @@ class BooksApp extends React.Component {
                       />
         )}
         />
-        <Route path='/detail/:id' render={({match}) => (
+        <Route path='/detail/:id' render={({match, history}) => (
           <BookDetail onClickBookItem={this.showDetail} 
                      onMoveShelf={this.moveShelf}
+                     history={history}
                      match={match} 
                      backUrl={this.state.backUrl} 
                      books={this.state.backUrl === '/search' ? this.state.searchBooksResult : this.state.books}  
+                     book={this.state.showingBook}
+                     showDetail={this.state.showDetail}
                      />
         )}
         />

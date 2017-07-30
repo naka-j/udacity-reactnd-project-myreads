@@ -7,16 +7,6 @@ import {Link} from 'react-router-dom'
 class BookDetail extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            book: Book,
-            showDetail: false
-        }
-    }
-
-    componentDidMount() {
-        BooksAPI.get(this.props.match.params.id).then(book => {
-            this.setState({book: book, showDetail: true})
-        })
     }
 
     static propTypes = {
@@ -24,12 +14,14 @@ class BookDetail extends Component {
     }
 
     render() {
-        const book = this.state.book
+        const book = this.props.book
+        const candidateBooks = this.props.books
         return (
             <div>
                 <Link className="close-search" to={this.props.backUrl ? this.props.backUrl : '/'}>Close</Link>
                 <div className='book-detail'>
-                    {this.state.showDetail && (
+                    {this.props.showDetail && (
+                        <div>
                         <div className='detail-main'>
                             <div className="book-thumbnail">
                                 <img src={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
@@ -57,29 +49,33 @@ class BookDetail extends Component {
                                 </div>
                             </div>
                         </div>
-                    )}
-                    <div className='other-books'>
-                        <ul className='other-books-list'>
-                            {this.props.books.filter((b) => b.id !== book.id).map((b) => {
-                                const bookImageURL =  (b.imageLinks === undefined ? "" : b.imageLinks.thumbnail)
-                                return (
-                                    <li key={b.id} className='candidate'>
-                                        <div className="book">
-                                            <div className="book-top">
-                                                <div onClick={() => this.props.onClickBookItem(this.props.history, book.id)}>
-                                                    <div className="book-cover">
-                                                        <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
+                        {candidateBooks.length && (
+                            <div className='other-books'>
+                                <ul className='other-books-list'>
+                                    {candidateBooks.filter((b) => b.id !== book.id).map((b) => {
+                                        const bookImageURL =  (b.imageLinks === undefined ? "" : b.imageLinks.thumbnail)
+                                        return (
+                                            <li key={b.id} className='candidate'>
+                                                <div className="book">
+                                                    <div className="book-top">
+                                                        <div onClick={() => this.props.onClickBookItem(this.props.history, b.id)}>
+                                                            <div className="book-cover">
+                                                                <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div className="book-title">{b.title}</div>
+                                                    <div className="book-authors">{b.authors}</div>
                                                 </div>
-                                            </div>
-                                            <div className="book-title">{b.title}</div>
-                                            <div className="book-authors">{book.authors}</div>
-                                        </div>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
+                        )}
+                        </div>
+                    )}
+                    
                 </div>
             </div>
         )
