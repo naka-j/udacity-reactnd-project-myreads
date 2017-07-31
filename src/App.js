@@ -31,7 +31,7 @@ class BooksApp extends React.Component {
 
     this.moveShelf = this.moveShelf.bind(this)
     this.search = this.search.bind(this)
-    this.showDetail = this.showDetail.bind(this)
+    this.viewDetail = this.viewDetail.bind(this)
   }
 
   componentDidMount() {
@@ -80,7 +80,7 @@ class BooksApp extends React.Component {
     })
   }
 
-  showDetail(history, id) {
+  viewDetail(history, id) {
     // keep back url before replacing url
     BooksAPI.get(id).then(book => {
       this.setState({showingBook: book, showDetail: true})
@@ -96,7 +96,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path='/' render={({history}) => (
           <ListBooks history={history} 
-                    onClickBookItem={this.showDetail} 
+                    onClickBookItem={this.viewDetail} 
                     books={this.state.books} 
                     onMoveShelf={this.moveShelf} 
                     />
@@ -104,7 +104,7 @@ class BooksApp extends React.Component {
         />
         <Route path='/search' render={({history}) => (  
           <SearchBooks history={history} 
-                      onClickBookItem={this.showDetail} 
+                      onClickBookItem={this.viewDetail} 
                       onMoveShelf={this.moveShelf} 
                       search={this.search} 
                       books={this.state.searchBooksResult} 
@@ -112,7 +112,7 @@ class BooksApp extends React.Component {
         )}
         />
         <Route path='/detail/:id' render={({match, history}) => (
-          <BookDetail onClickBookItem={this.showDetail} 
+          <BookDetail onClickBookItem={this.viewDetail} 
                      onMoveShelf={this.moveShelf}
                      history={history}
                      match={match} 

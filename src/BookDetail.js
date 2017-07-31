@@ -9,6 +9,10 @@ class BookDetail extends Component {
         super(props)
     }
 
+    componentDidMount() {
+        this.props.onClickBookItem(this.props.history, this.props.match.params.id)
+    }
+
     static propTypes = {
         onMoveShelf: PropTypes.func.isRequired
     }
