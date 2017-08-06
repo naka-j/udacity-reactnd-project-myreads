@@ -76,7 +76,6 @@ class BooksApp extends React.Component {
       }
       books.sort(sortBy('title'))
       this.setState({searchBooksResult: books})
-      console.log(books)
     })
   }
 

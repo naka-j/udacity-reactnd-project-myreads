@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
+import ShelfChanger from './ShelfChanger'
 import {Book} from './BookModel'
 import {Link} from 'react-router-dom'
+
 
 class BookDetail extends Component {
     constructor(props) {
@@ -22,7 +24,10 @@ class BookDetail extends Component {
         const candidateBooks = this.props.books
         return (
             <div>
-                <Link className="close-search" to={this.props.backUrl ? this.props.backUrl : '/'}>Close</Link>
+                <div className='detail-header'>
+                    <Link className="close-detail" to={this.props.backUrl ? this.props.backUrl : '/'}>Close</Link>
+                    <ShelfChanger book={book} onMoveShelf={this.props.onMoveShelf} />
+                </div>
                 <div className='book-detail'>
                     {this.props.showDetail && (
                         <div>
@@ -81,6 +86,8 @@ class BookDetail extends Component {
                     )}
                     
                 </div>
+
+                
             </div>
         )
     }

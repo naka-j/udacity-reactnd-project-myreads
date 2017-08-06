@@ -20,7 +20,7 @@ export const Book = {
     publisher: null,
     ratingsCount: null,
     readingModes: null,
-    shelf: null,
+    shelf: '',
     subtitle: null,
     title: null
 }

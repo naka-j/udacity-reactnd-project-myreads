@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ShelfChanger from './ShelfChanger'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
@@ -21,15 +22,8 @@ class BookItem extends Component {
                             <img src={bookImageURL} alt='' style={{maxHeight: 193, verticalAlign: `bottom`}} />
                         </div>
                     </div>
-                    <div className="book-shelf-changer">
-                    <select value={book.shelf} onChange={(event) => this.props.onMoveShelf(book, event)}>
-                        <option value="none" disabled>Move to...</option>
-                        <option value="currentlyReading">Currently Reading</option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                    </select>
-                    </div>
+                    <ShelfChanger book={book} onMoveShelf={this.props.onMoveShelf} />
+                    
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
