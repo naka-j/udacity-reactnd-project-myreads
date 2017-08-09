@@ -1,5 +1,5 @@
 import React from 'react'
-import BooksGrid from './BooksGrid'
+import BooksGrid from '../BooksGrid'
 
 function BookShelf(props) {
     return(

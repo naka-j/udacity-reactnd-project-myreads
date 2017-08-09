@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import ShelfChanger from './ShelfChanger'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
 
 class BookItem extends Component {
     
@@ -23,7 +22,6 @@ class BookItem extends Component {
                         </div>
                     </div>
                     <ShelfChanger book={book} onMoveShelf={this.props.onMoveShelf} />
-                    
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>

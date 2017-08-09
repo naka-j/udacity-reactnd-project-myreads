@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import BooksGrid from './BooksGrid'
-import * as ConstantValues from './Constants'
+import BooksGrid from '../BooksGrid'
+import * as ConstantValues from '../../Constants'
 
 class SearchBooks extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class SearchBooks extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <BooksGrid history={this.props.history} onClickBookItem={this.props.onClickBookItem} books={books.filter((book) => book.shelf === ConstantValues.ShelfId.NONE)} onMoveShelf={this.props.onMoveShelf} />
+                    <BooksGrid history={this.props.history} onClickBookItem={this.props.onClickBookItem} books={books.filter((book) => book.shelf === ConstantValues.ShelfId.NONE || book.shelf === undefined)} onMoveShelf={this.props.onMoveShelf} />
                 </div>
             </div>
         )

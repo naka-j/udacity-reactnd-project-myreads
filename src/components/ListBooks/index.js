@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import BookShelf from './BookShelf'
-import * as ConstantValues from './Constants'
+import BookShelf from '../BookShelf'
+import * as ConstantValues from '../../Constants'
 
 function ListBooks(props){
     const books = props.books

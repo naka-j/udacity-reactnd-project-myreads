@@ -1,10 +1,10 @@
 import React from 'react'
 import {Route} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import ListBooks from './ListBooks'
-import SearchBooks from './SearchBooks'
-import BookDetail from './BookDetail'
-import {Book} from './BookModel'
+import ListBooks from './components/ListBooks'
+import SearchBooks from './components/SearchBooks'
+import BookDetail from './components/BookDetail'
+import {Book} from './Models'
 import sortBy from 'sort-by'
 import './App.css'
 
@@ -37,7 +37,6 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({books: books})
-      console.log(books)
     })
   }
 
@@ -59,9 +58,8 @@ class BooksApp extends React.Component {
   addBookToShelf(books, targetBook, targetShelf) {
     const newBook = targetBook
     newBook.shelf = targetShelf
-    books.push(newBook)
     this.setState((state) => (
-      {books: books}
+      {books: books.push(newBook)}
     ))
   }
 
