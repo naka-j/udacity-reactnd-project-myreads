@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import ListBooks from './components/ListBooks'
 import SearchBooks from './components/SearchBooks'
@@ -7,6 +7,8 @@ import BookDetail from './components/BookDetail'
 import {Book} from './Models'
 import sortBy from 'sort-by'
 import './App.css'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
 
 class BooksApp extends React.Component {
   // state = {
@@ -91,35 +93,43 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path='/' render={({history}) => (
-          <ListBooks history={history} 
-                    onClickBookItem={this.viewDetail} 
-                    books={this.state.books} 
-                    onMoveShelf={this.moveShelf} 
-                    />
-        )}
-        />
-        <Route path='/search' render={({history}) => (  
-          <SearchBooks history={history} 
+        <ReactCSSTransitionGroup
+                transitionName="fade"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}
+                >
+        <Switch key={location.pathname} location={location}>
+          <Route exact path='/' render={({history}) => (
+            <ListBooks history={history} 
                       onClickBookItem={this.viewDetail} 
+                      books={this.state.books} 
                       onMoveShelf={this.moveShelf} 
-                      search={this.search} 
-                      books={this.state.searchBooksResult} 
                       />
-        )}
-        />
-        <Route path='/detail/:id' render={({match, history}) => (
-          <BookDetail onClickBookItem={this.viewDetail} 
-                     onMoveShelf={this.moveShelf}
-                     history={history}
-                     match={match} 
-                     backUrl={this.state.backUrl} 
-                     books={this.state.backUrl === '/search' ? this.state.searchBooksResult : this.state.books}  
-                     book={this.state.showingBook}
-                     showDetail={this.state.showDetail}
-                     />
-        )}
-        />
+          )}
+          />
+          <Route path='/search' render={({history}) => (  
+            <SearchBooks history={history} 
+                        onClickBookItem={this.viewDetail} 
+                        onMoveShelf={this.moveShelf} 
+                        search={this.search} 
+                        books={this.state.searchBooksResult} 
+                        />
+          )}
+          />
+          <Route path='/detail/:id' render={({match, history}) => (
+            <BookDetail onClickBookItem={this.viewDetail} 
+                      onMoveShelf={this.moveShelf}
+                      history={history}
+                      match={match} 
+                      backUrl={this.state.backUrl} 
+                      books={this.state.backUrl === '/search' ? this.state.searchBooksResult : this.state.books}  
+                      book={this.state.showingBook}
+                      showDetail={this.state.showDetail}
+                      />
+          )}
+          />
+        </Switch>
+        </ReactCSSTransitionGroup>
       </div>
     )
   }
