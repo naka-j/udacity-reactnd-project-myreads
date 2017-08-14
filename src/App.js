@@ -60,8 +60,9 @@ class BooksApp extends React.Component {
   addBookToShelf(books, targetBook, targetShelf) {
     const newBook = targetBook
     newBook.shelf = targetShelf
+    books.push(newBook)
     this.setState((state) => (
-      {books: books.push(newBook)}
+      {books: books}
     ))
   }
 
